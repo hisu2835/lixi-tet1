@@ -1,7 +1,0 @@
-# Các file/thư mục không cần đưa lên GitHub
-node_modules/
-data/
-*.db
-.env
-.DS_Store
-Thumbs.db

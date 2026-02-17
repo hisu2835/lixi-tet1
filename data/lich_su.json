@@ -1,0 +1,65 @@
+[
+  {
+    "id": 9,
+    "menh_gia": 200,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:23:22 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 8,
+    "menh_gia": 500,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:21:54 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 7,
+    "menh_gia": 1000,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:21:52 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 6,
+    "menh_gia": 500,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:21:38 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 5,
+    "menh_gia": 0,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:20:04 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 4,
+    "menh_gia": 2000,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:19:58 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 3,
+    "menh_gia": 100,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:19:55 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 2,
+    "menh_gia": 0,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:19:52 17/2/2026",
+    "la_cheat": 0
+  },
+  {
+    "id": 1,
+    "menh_gia": 500,
+    "ten_nguoi": "Khách",
+    "thoi_gian": "11:19:43 17/2/2026",
+    "la_cheat": 0
+  }
+]
