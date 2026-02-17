@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧧 Lì Xì Tết - Rút Thăm May Mắn</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts - Font chữ đẹp cho giao diện Tết -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&family=Be+Vietnam+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ============================================= -->
+  <!-- HIỆU ỨNG RƠI - Tạo bằng JavaScript          -->
+  <!-- Các icon tiền, hoa, lá sẽ rơi xuống như tuyết -->
+  <!-- ============================================= -->
+  <div id="hieu-ung-roi" class="hieu-ung-container"></div>
+
+  <!-- ============================================= -->
+  <!-- PHÁO HOA - Hiệu ứng khi trúng giải lớn       -->
+  <!-- ============================================= -->
+  <div id="phao-hoa" class="phao-hoa-container"></div>
+
+  <!-- ============================================= -->
+  <!-- NỘI DUNG CHÍNH                                -->
+  <!-- ============================================= -->
+  <div class="container">
+    
+    <!-- Tiêu đề -->
+    <header class="header">
+      <div class="den-long den-long-trai">🏮</div>
+      <div class="tieu-de-chinh">
+        <h1 class="tieu-de">🧧 Lì Xì Tết 🧧</h1>
+        <p class="phu-de">✨ Rút Thăm May Mắn - Đón Xuân Phát Tài ✨</p>
+        <p class="nam-moi">🐍 Năm Tỵ 2026 - Tấn Tài Tấn Lộc 🐍</p>
+      </div>
+      <div class="den-long den-long-phai">🏮</div>
+    </header>
+
+    <!-- ============================================= -->
+    <!-- KHU VỰC PHONG BÌ LÌ XÌ                      -->
+    <!-- Click vào phong bì để rút thăm               -->
+    <!-- ============================================= -->
+    <div class="khu-vuc-lixi">
+      <!-- Thống kê nhanh -->
+      <div class="thong-ke-nhanh">
+        <span id="so-phong-bi">📦 Còn lại: <strong>---</strong> phong bì</span>
+      </div>
+
+      <!-- Phong bì lì xì - Nút rút thăm chính -->
+      <div class="phong-bi-wrapper">
+        <button id="nut-rut-lixi" class="phong-bi" onclick="rutLiXi(false)">
+          <div class="phong-bi-mat-truoc">
+            <div class="hoa-van-tren">❀ ❀ ❀</div>
+            <div class="chu-phuc">福</div>
+            <div class="chu-lixi">LÌ XÌ</div>
+            <div class="hoa-van-duoi">✿ ✿ ✿</div>
+          </div>
+          <div class="phong-bi-mat-sau">
+            <span class="mo-phong-bi">Nhấn để mở!</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Khu vực hiển thị kết quả -->
+      <div id="ket-qua" class="ket-qua an">
+        <div class="ket-qua-noi-dung">
+          <p id="so-tien" class="so-tien"></p>
+          <p id="loi-chuc" class="loi-chuc"></p>
+        </div>
+      </div>
+
+      <!-- Nút rút lại -->
+      <button id="nut-rut-lai" class="nut-rut-lai an" onclick="rutLai()">
+        🔄 Rút Lại Lần Nữa
+      </button>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- LỊCH SỬ RÚT LÌ XÌ                           -->
+    <!-- ============================================= -->
+    <div class="lich-su-section">
+      <h2 class="lich-su-tieu-de">📜 Lịch Sử Rút Lì Xì</h2>
+      <div id="danh-sach-lich-su" class="danh-sach-lich-su">
+        <!-- Sẽ được thêm bằng JavaScript -->
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- BẢNG TỶ LỆ - Cho người chơi biết xác suất    -->
+    <!-- ============================================= -->
+    <div class="ty-le-section">
+      <h2 class="ty-le-tieu-de">📊 Bảng Tỷ Lệ Trúng Thưởng</h2>
+      <div class="ty-le-grid">
+        <div class="ty-le-item cao">
+          <span class="icon">🟢</span>
+          <span>0đ - 200đ</span>
+          <span class="tag">Phổ biến</span>
+        </div>
+        <div class="ty-le-item trung-binh">
+          <span class="icon">🟡</span>
+          <span>500đ - 2.000đ</span>
+          <span class="tag">Trung bình</span>
+        </div>
+        <div class="ty-le-item thap">
+          <span class="icon">🟠</span>
+          <span>5.000đ - 10.000đ</span>
+          <span class="tag">Hiếm</span>
+        </div>
+        <div class="ty-le-item cuc-thap">
+          <span class="icon">🔴</span>
+          <span>20.000đ+</span>
+          <span class="tag">Cực hiếm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>🌸 Chúc Mừng Năm Mới - Tết Nguyên Đán 2026 🌸</p>
+      <p class="footer-sub">Made with ❤️ | <a href="/admin.html">⚙️ Quản lý</a></p>
+    </footer>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- NÚT CHEAT ẨN - Ở góc phải trên cùng         -->
+  <!-- Nút này gần như vô hình, chỉ người biết mới  -->
+  <!-- tìm được. Nhấn vào sẽ luôn ra mệnh giá cao  -->
+  <!-- nhất trong hệ thống (JACKPOT!)                -->
+  <!-- ============================================= -->
+  <div id="nut-cheat" class="nut-cheat" onclick="rutLiXi(true)" title=" ">
+    <!-- Nút ẩn - không hiển thị gì cả, chỉ là vùng click -->
+  </div>
+
+  <!-- Nút cheat thứ 2 ở góc trái dưới -->
+  <div id="nut-cheat-2" class="nut-cheat nut-cheat-trai" onclick="rutLiXi(true)" title=" ">
+  </div>
+
+  <!-- Load JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>

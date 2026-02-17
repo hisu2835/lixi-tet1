@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚙️ Quản Lý Lì Xì - Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================
+       ADMIN STYLE - Giao diện quản lý mệnh giá lì xì
+       Thiết kế tối giản, dễ sử dụng
+       ===================================================== */
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .admin-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header Admin */
+    .admin-header {
+      text-align: center;
+      padding: 20px 0 30px;
+    }
+
+    .admin-header h1 {
+      font-size: 2em;
+      color: #FFD700;
+      margin-bottom: 5px;
+    }
+
+    .admin-header p {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .admin-header a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    /* Thống kê tổng quan */
+    .thong-ke-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .stat-card .so {
+      font-size: 2em;
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    .stat-card .nhan {
+      font-size: 0.85em;
+      color: rgba(255,255,255,0.6);
+      margin-top: 5px;
+    }
+
+    /* Form thêm mệnh giá */
+    .form-section {
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .form-section h2 {
+      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,215,0,0.3);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 1em;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: #FFD700;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .btn-them {
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #1a1a2e;
+      align-self: flex-end;
+    }
+
+    .btn-them:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+    }
+
+    .btn-xoa {
+      background: #ff4444;
+      color: #fff;
+      padding: 6px 15px;
+      font-size: 0.85em;
+    }
+
+    .btn-xoa:hover {
+      background: #cc0000;
+    }
+
+    .btn-sua {
+      background: #4CAF50;
+      color: #fff;
+      padding: 6px 15px;
+      font-size: 0.85em;
+    }
+
+    .btn-sua:hover {
+      background: #388E3C;
+    }
+
+    /* Bảng danh sách mệnh giá */
+    .bang-section {
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 25px;
+      border: 1px solid rgba(255,215,0,0.2);
+      margin-bottom: 25px;
+    }
+
+    .bang-section h2 {
+      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: rgba(255,215,0,0.15);
+      color: #FFD700;
+      padding: 12px 15px;
+      text-align: left;
+      font-size: 0.9em;
+    }
+
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.95em;
+    }
+
+    tr:hover td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .menh-gia-cell {
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    /* Thông báo */
+    .thong-bao {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 12px;
+      font-weight: 600;
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+    }
+
+    .thong-bao.thanh-cong {
+      background: #4CAF50;
+      color: #fff;
+    }
+
+    .thong-bao.that-bai {
+      background: #ff4444;
+      color: #fff;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Quick add buttons */
+    .quick-add {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .quick-add-btn {
+      padding: 8px 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,215,0,0.3);
+      background: rgba(255,215,0,0.1);
+      color: #FFD700;
+      cursor: pointer;
+      font-size: 0.85em;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .quick-add-btn:hover {
+      background: rgba(255,215,0,0.25);
+      border-color: #FFD700;
+    }
+
+    /* Lịch sử section */
+    .lich-su-admin {
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 25px;
+      border: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .lich-su-admin h2 {
+      color: #FFD700;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .thong-ke-cards { grid-template-columns: 1fr; }
+      .form-row { flex-direction: column; }
+      th, td { padding: 8px 10px; font-size: 0.85em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Header -->
+    <div class="admin-header">
+      <h1>⚙️ Quản Lý Lì Xì</h1>
+      <p>Thêm, xóa, sửa mệnh giá tiền lì xì | <a href="/">🏠 Về trang chính</a></p>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- THỐNG KÊ TỔNG QUAN                           -->
+    <!-- ============================================= -->
+    <div class="thong-ke-cards">
+      <div class="stat-card">
+        <div class="so" id="stat-menh-gia">---</div>
+        <div class="nhan">Loại mệnh giá</div>
+      </div>
+      <div class="stat-card">
+        <div class="so" id="stat-phong-bi">---</div>
+        <div class="nhan">Tổng phong bì</div>
+      </div>
+      <div class="stat-card">
+        <div class="so" id="stat-tong-tien">---</div>
+        <div class="nhan">Tổng tiền (VNĐ)</div>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- FORM THÊM MỆNH GIÁ MỚI                      -->
+    <!-- ============================================= -->
+    <div class="form-section">
+      <h2>➕ Thêm Mệnh Giá Mới</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>💰 Mệnh giá (VNĐ)</label>
+          <input type="number" id="input-menh-gia" placeholder="VD: 10000" min="0">
+        </div>
+        <div class="form-group">
+          <label>📦 Số lượng phong bì</label>
+          <input type="number" id="input-so-luong" placeholder="VD: 5" min="1" value="1">
+        </div>
+        <button class="btn btn-them" onclick="themMenhGia()">➕ Thêm</button>
+      </div>
+
+      <!-- Nút thêm nhanh các mệnh giá phổ biến -->
+      <div class="quick-add">
+        <span style="color:rgba(255,255,255,0.5); font-size:0.85em; align-self:center;">Thêm nhanh:</span>
+        <button class="quick-add-btn" onclick="themNhanh(0, 50)">0đ ×50</button>
+        <button class="quick-add-btn" onclick="themNhanh(100, 30)">100đ ×30</button>
+        <button class="quick-add-btn" onclick="themNhanh(200, 30)">200đ ×30</button>
+        <button class="quick-add-btn" onclick="themNhanh(500, 20)">500đ ×20</button>
+        <button class="quick-add-btn" onclick="themNhanh(1000, 15)">1.000đ ×15</button>
+        <button class="quick-add-btn" onclick="themNhanh(5000, 5)">5.000đ ×5</button>
+        <button class="quick-add-btn" onclick="themNhanh(10000, 3)">10.000đ ×3</button>
+        <button class="quick-add-btn" onclick="themNhanh(50000, 1)">50.000đ ×1</button>
+        <button class="quick-add-btn" onclick="themNhanh(100000, 1)">100.000đ ×1</button>
+        <button class="quick-add-btn" onclick="themNhanh(500000, 1)">500.000đ ×1</button>
+      </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- BẢNG DANH SÁCH MỆNH GIÁ                     -->
+    <!-- ============================================= -->
+    <div class="bang-section">
+      <h2>📋 Danh Sách Mệnh Giá</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>💰 Mệnh Giá</th>
+            <th>📦 Số Lượng</th>
+            <th>📅 Ngày Tạo</th>
+            <th>🎯 Tỷ Lệ</th>
+            <th>⚙️ Thao Tác</th>
+          </tr>
+        </thead>
+        <tbody id="bang-menh-gia">
+          <!-- Sẽ được thêm bằng JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- LỊCH SỬ RÚT LÌ XÌ                           -->
+    <!-- ============================================= -->
+    <div class="lich-su-admin">
+      <h2>📜 Lịch Sử Rút Lì Xì (20 lần gần nhất)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Người Rút</th>
+            <th>💰 Mệnh Giá</th>
+            <th>📅 Thời Gian</th>
+            <th>🎮 Cheat?</th>
+          </tr>
+        </thead>
+        <tbody id="bang-lich-su">
+          <!-- Sẽ được thêm bằng JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // =====================================================
+    // ADMIN SCRIPT - Logic trang quản lý
+    // =====================================================
+
+    const API = '';
+
+    // Tải dữ liệu khi mở trang
+    document.addEventListener('DOMContentLoaded', () => {
+      taiDanhSachMenhGia();
+      taiThongKe();
+      taiLichSu();
+    });
+
+    // =====================================================
+    // TẢI DANH SÁCH MỆNH GIÁ - Hiển thị trong bảng
+    // =====================================================
+    async function taiDanhSachMenhGia() {
+      try {
+        const res = await fetch(`${API}/api/menh-gia`);
+        const data = await res.json();
+
+        if (data.thanh_cong) {
+          const bang = document.getElementById('bang-menh-gia');
+
+          // Tính tổng trọng số để hiển thị tỷ lệ %
+          const tongTrongSo = data.du_lieu.reduce((t, item) => {
+            return t + tinhTrongSo(item.menh_gia) * Math.min(item.so_luong, 10);
+          }, 0);
+
+          bang.innerHTML = data.du_lieu.map(item => {
+            // Tính tỷ lệ % của mệnh giá này
+            const trongSo = tinhTrongSo(item.menh_gia) * Math.min(item.so_luong, 10);
+            const tyLe = ((trongSo / tongTrongSo) * 100).toFixed(1);
+
+            // Màu theo tỷ lệ
+            let mauTyLe = '#4CAF50'; // Xanh = cao
+            if (tyLe < 5) mauTyLe = '#ff4444'; // Đỏ = thấp
+            else if (tyLe < 15) mauTyLe = '#FFA500'; // Cam = trung bình
+
+            return `
+              <tr>
+                <td>${item.id}</td>
+                <td class="menh-gia-cell">${item.menh_gia.toLocaleString('vi-VN')}đ</td>
+                <td>
+                  <input type="number" value="${item.so_luong}" min="0" 
+                    style="width:70px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,215,0,0.3); 
+                    color:#fff; padding:5px; border-radius:5px; font-family:inherit;"
+                    onchange="suaSoLuong(${item.id}, this.value)">
+                </td>
+                <td style="font-size:0.8em; color:rgba(255,255,255,0.5);">${item.ngay_tao || 'N/A'}</td>
+                <td style="color:${mauTyLe}; font-weight:600;">${tyLe}%</td>
+                <td>
+                  <button class="btn btn-xoa" onclick="xoaMenhGia(${item.id})">🗑️ Xóa</button>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        console.error('Lỗi tải mệnh giá:', err);
+      }
+    }
+
+    // =====================================================
+    // TÍNH TRỌNG SỐ - Giống server, dùng để hiển thị tỷ lệ
+    // =====================================================
+    function tinhTrongSo(menh_gia) {
+      if (menh_gia <= 200) return 100;
+      if (menh_gia === 500) return 30;
+      if (menh_gia === 1000) return 20;
+      if (menh_gia === 2000) return 15;
+      if (menh_gia === 5000) return 8;
+      if (menh_gia === 10000) return 5;
+      if (menh_gia === 20000) return 3;
+      if (menh_gia === 50000) return 1.5;
+      if (menh_gia >= 100000) return 0.5;
+      return Math.max(0.1, 50 - (menh_gia / 100));
+    }
+
+    // =====================================================
+    // TẢI THỐNG KÊ - Hiển thị số liệu tổng quan
+    // =====================================================
+    async function taiThongKe() {
+      try {
+        const res = await fetch(`${API}/api/thong-ke`);
+        const data = await res.json();
+
+        if (data.thanh_cong) {
+          document.getElementById('stat-menh-gia').textContent = data.so_menh_gia;
+          document.getElementById('stat-phong-bi').textContent = data.tong_phong_bi;
+          document.getElementById('stat-tong-tien').textContent = data.tong_tien.toLocaleString('vi-VN');
+        }
+      } catch (err) {
+        console.error('Lỗi tải thống kê:', err);
+      }
+    }
+
+    // =====================================================
+    // TẢI LỊCH SỬ - Hiển thị lịch sử rút lì xì
+    // =====================================================
+    async function taiLichSu() {
+      try {
+        const res = await fetch(`${API}/api/lich-su`);
+        const data = await res.json();
+
+        if (data.thanh_cong) {
+          const bang = document.getElementById('bang-lich-su');
+          bang.innerHTML = data.du_lieu.map(item => `
+            <tr>
+              <td>${item.ten_nguoi}</td>
+              <td class="menh-gia-cell">${item.menh_gia.toLocaleString('vi-VN')}đ</td>
+              <td style="font-size:0.85em;">${item.thoi_gian}</td>
+              <td>${item.la_cheat ? '⭐ Có' : '❌ Không'}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        console.error('Lỗi tải lịch sử:', err);
+      }
+    }
+
+    // =====================================================
+    // THÊM MỆNH GIÁ MỚI
+    // =====================================================
+    async function themMenhGia() {
+      const menh_gia = parseInt(document.getElementById('input-menh-gia').value);
+      const so_luong = parseInt(document.getElementById('input-so-luong').value) || 1;
+
+      // Kiểm tra dữ liệu
+      if (isNaN(menh_gia) || menh_gia < 0) {
+        hienThongBao('Vui lòng nhập mệnh giá hợp lệ!', 'that-bai');
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API}/api/menh-gia`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ menh_gia, so_luong })
+        });
+        const data = await res.json();
+
+        if (data.thanh_cong) {
+          hienThongBao(data.thong_diep, 'thanh-cong');
+          // Xóa input
+          document.getElementById('input-menh-gia').value = '';
+          document.getElementById('input-so-luong').value = '1';
+          // Tải lại danh sách
+          taiDanhSachMenhGia();
+          taiThongKe();
+        }
+      } catch (err) {
+        hienThongBao('Lỗi kết nối server!', 'that-bai');
+      }
+    }
+
+    // Thêm nhanh - cho nút bấm mệnh giá có sẵn
+    function themNhanh(menh_gia, so_luong) {
+      document.getElementById('input-menh-gia').value = menh_gia;
+      document.getElementById('input-so-luong').value = so_luong;
+      themMenhGia();
+    }
+
+    // =====================================================
+    // XÓA MỆNH GIÁ
+    // =====================================================
+    async function xoaMenhGia(id) {
+      if (!confirm('Bạn có chắc muốn xóa mệnh giá này?')) return;
+
+      try {
+        const res = await fetch(`${API}/api/menh-gia/${id}`, {
+          method: 'DELETE'
+        });
+        const data = await res.json();
+
+        if (data.thanh_cong) {
+          hienThongBao('Đã xóa thành công!', 'thanh-cong');
+          taiDanhSachMenhGia();
+          taiThongKe();
+        }
+      } catch (err) {
+        hienThongBao('Lỗi khi xóa!', 'that-bai');
+      }
+    }
+
+    // =====================================================
+    // SỬA SỐ LƯỢNG - Khi thay đổi input trong bảng
+    // =====================================================
+    async function suaSoLuong(id, so_luong) {
+      try {
+        await fetch(`${API}/api/menh-gia/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ so_luong: parseInt(so_luong) })
+        });
+        hienThongBao('Đã cập nhật!', 'thanh-cong');
+        taiThongKe();
+        // Tải lại để cập nhật tỷ lệ %
+        taiDanhSachMenhGia();
+      } catch (err) {
+        hienThongBao('Lỗi cập nhật!', 'that-bai');
+      }
+    }
+
+    // =====================================================
+    // HIỂN THỊ THÔNG BÁO - Popup góc phải trên
+    // =====================================================
+    function hienThongBao(noiDung, loai) {
+      const thongBao = document.createElement('div');
+      thongBao.classList.add('thong-bao', loai);
+      thongBao.textContent = noiDung;
+      document.body.appendChild(thongBao);
+
+      // Tự động ẩn sau 3 giây
+      setTimeout(() => {
+        thongBao.style.opacity = '0';
+        thongBao.style.transition = 'opacity 0.3s';
+        setTimeout(() => thongBao.remove(), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
